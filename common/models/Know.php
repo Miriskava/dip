@@ -7,10 +7,11 @@ use Yii;
 /**
  * This is the model class for table "know".
  *
- * @property string $id Номер 
- * @property string $id_discipline Номер дисциплины
+ * @property int $id Номер 
+ * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
  *
+ * @property Knowledge $id0
  * @property Discipline $discipline
  */
 class Know extends \yii\db\ActiveRecord
@@ -32,6 +33,7 @@ class Know extends \yii\db\ActiveRecord
             [['id_discipline', 'name'], 'required'],
             [['id_discipline'], 'integer'],
             [['name'], 'string'],
+            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Knowledge::className(), 'targetAttribute' => ['id' => 'id']],
             [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
         ];
     }
@@ -46,6 +48,14 @@ class Know extends \yii\db\ActiveRecord
             'id_discipline' => 'Id Discipline',
             'name' => 'Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getId0()
+    {
+        return $this->hasOne(Knowledge::className(), ['id' => 'id']);
     }
 
     /**

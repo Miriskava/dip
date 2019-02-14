@@ -143,7 +143,7 @@ class HeadController extends Controller
     {
         $searchModel = new ProfessionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('profession',[
+        return $this->render('profession/profession',[
             'searchModel'=>$searchModel,
             'dataProvider'=>$dataProvider,
         ]);
@@ -154,7 +154,7 @@ class HeadController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['profession']);
         } else {
-            return $this->render('createprofession', [
+            return $this->render('profession/createprofession', [
                 'model' => $model,
             ]);
         }
