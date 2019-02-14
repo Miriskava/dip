@@ -15,13 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'yii\grid\SerialColumn'],
 
         'code',
-        ['attribute'=>'name',
-            'format' => 'raw',
-            'value'=>function ($data) {
-                return Html::a($data->name,['viewprofession'],[]);}],
-
-        ['attribute'=>'date',
-            'format' => ['date', 'dd.MM.Y']],
+        'name',
+        'date',
 
         ['class' => 'yii\grid\ActionColumn'],
     ],

@@ -7,12 +7,11 @@ use Yii;
 /**
  * This is the model class for table "skill".
  *
- * @property int $id Номер
- * @property int $id_workfunction Номер трудоввой функции
- * @property int $id_discipline Номер дисциплины
+ * @property string $id Номер
+ * @property string $id_workfunction Номер трудоввой функции
+ * @property string $id_discipline Номер дисциплины
  * @property string $name Наименование
  *
- * @property Can $can
  * @property Discipline $discipline
  * @property Workfunction $workfunction
  */
@@ -51,14 +50,6 @@ class Skill extends \yii\db\ActiveRecord
             'id_discipline' => 'Id Discipline',
             'name' => 'Name',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCan()
-    {
-        return $this->hasOne(Can::className(), ['id' => 'id']);
     }
 
     /**

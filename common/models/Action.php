@@ -7,14 +7,13 @@ use Yii;
 /**
  * This is the model class for table "action".
  *
- * @property int $id_action Номер
- * @property int $id_workfun Номер трудоввой функции
- * @property int $id_discipline Номер дисциплины
+ * @property string $id_action Номер
+ * @property string $id_workfun Номер трудоввой функции
+ * @property string $id_discipline Номер дисциплины
  * @property string $name Наименование
  *
  * @property Discipline $discipline
  * @property Workfunction $workfun
- * @property Own $own
  */
 class Action extends \yii\db\ActiveRecord
 {
@@ -67,13 +66,5 @@ class Action extends \yii\db\ActiveRecord
     public function getWorkfun()
     {
         return $this->hasOne(Workfunction::className(), ['id' => 'id_workfun']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOwn()
-    {
-        return $this->hasOne(Own::className(), ['id' => 'id_action']);
     }
 }
