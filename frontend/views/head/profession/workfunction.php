@@ -2,7 +2,7 @@
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-$this->title = 'Профессиональные стандарты';
+$this->title = 'Трудовые функции';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -10,7 +10,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <?=Html::a('Добавить',['createprofession'],['class'=>'btn btn-success'])?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -18,11 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ['attribute'=>'name',
             'format' => 'raw',
             'value'=>function ($data) {
-                return Html::a($data->name,['general','id'=>$data->id],[]);}],
-
-        ['attribute'=>'date',
-            'format' => ['date', 'dd.MM.Y']],
-
+                return Html::a($data->name,['sorts','id'=>$data->id],[]);}
+        ],
+        'level',
         ['class' => 'yii\grid\ActionColumn'],
     ],
 ]); ?>

@@ -2,7 +2,7 @@
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-$this->title = 'Профессиональные стандарты';
+$this->title = 'Обобщенные трудовые функции';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ['attribute'=>'name',
             'format' => 'raw',
             'value'=>function ($data) {
-                return Html::a($data->name,['viewprofession','id'=>$data->id],[]);}
+                return Html::a($data->name,['workfunction','id'=>$data->id],[]);}
         ],
         'level',
         ['class' => 'yii\grid\ActionColumn'],

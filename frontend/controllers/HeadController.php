@@ -13,6 +13,7 @@ use common\models\Action;
 use common\models\ActionSearch;
 use common\models\Discipline;
 use common\models\DisciplineSearch;
+use common\models\General;
 use common\models\Knowledge;
 use common\models\Plan;
 use common\models\PlanSearch;
@@ -20,6 +21,7 @@ use common\models\Profession;
 use common\models\ProfessionSearch;
 use common\models\SearchGeneral;
 use common\models\Skill;
+use common\models\Workfunction;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\data\ActiveDataProvider;
@@ -144,7 +146,7 @@ class HeadController extends Controller
     {
         $searchModel = new ProfessionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('profession/viewprofession',[
+        return $this->render('profession/profession',[
             'searchModel'=>$searchModel,
             'dataProvider'=>$dataProvider,
         ]);
@@ -161,13 +163,48 @@ class HeadController extends Controller
         }
     }
 
-    public function actionViewprofession($id)
+    public function actionGeneral($id)
     {
-        $searchModel = new SearchGeneral();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider=$dataProvider->query->where(['id_profession'=>$id]);
-        return $this->render('profession/viewprofession',[
+        $query=General::find()->where(['id_profession'=>$id]);
+        $dataProvider=new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $this->render('profession/general',[
+            'dataProvider'=>$dataProvider,
+        ]);
+    }
 
+    public function actionWorkfunction($id)
+    {
+        $query=Workfunction::find()->where(['id_general'=>$id]);
+        $dataProvider=new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $this->render('profession/workfunction',[
+            'dataProvider'=>$dataProvider,
+        ]);
+    }
+
+    public function actionSorts($id)
+    {
+        $query1=Action::find()->where(['id_workfun'=>$id]);
+        $action=new ActiveDataProvider([
+            'query' => $query1,
+        ]);
+
+        $query2=Skill::find()->where(['id_workfunction'=>$id]);
+        $skill=new ActiveDataProvider([
+            'query' => $query2,
+        ]);
+
+        $query3=Knowledge::find()->where(['id_workfunction'=>$id]);
+        $knowledge=new ActiveDataProvider([
+            'query' => $query3,
+        ]);
+        return $this->render('profession/sorts',[
+            'action'=>$action,
+            'skill'=>$skill,
+            'knowledge'=>$knowledge,
         ]);
     }
 }
