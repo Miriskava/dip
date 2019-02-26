@@ -15,11 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'yii\grid\SerialColumn'],
 
         'code',
-        'name',
-
-        ['attribute'=>'date',
-            'format' => ['date', 'dd.MM.Y']],
-
+        ['attribute'=>'name',
+            'format' => 'raw',
+            'value'=>function ($data) {
+                return Html::a($data->name,['viewprofession','id'=>$data->id],[]);}
+        ],
+        'level',
         ['class' => 'yii\grid\ActionColumn'],
     ],
 ]); ?>
