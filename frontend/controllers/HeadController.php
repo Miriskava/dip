@@ -18,6 +18,7 @@ use common\models\Plan;
 use common\models\PlanSearch;
 use common\models\Profession;
 use common\models\ProfessionSearch;
+use common\models\SearchGeneral;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidParamException;
@@ -143,7 +144,7 @@ class HeadController extends Controller
     {
         $searchModel = new ProfessionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('profession',[
+        return $this->render('profession/viewprofession',[
             'searchModel'=>$searchModel,
             'dataProvider'=>$dataProvider,
         ]);
@@ -158,5 +159,15 @@ class HeadController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionViewprofession($id)
+    {
+        $searchModel = new SearchGeneral();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider=$dataProvider->query->where(['id_profession'=>$id]);
+        return $this->render('profession/viewprofession',[
+
+        ]);
     }
 }
