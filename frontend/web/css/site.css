@@ -20,6 +20,11 @@ body {
     margin-top: -5px;
 }
 
+label{
+    font-weight: normal;
+    margin-left: 10px;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;

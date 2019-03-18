@@ -86,31 +86,6 @@ class HeadController extends Controller
         ]);
     }
 
-    public function actionDisciplineone($id)
-    {
-        $one=Discipline::findOne($id);
-        $actions=Action::find()->where(['id_discipline'=>$id])->all();
-        $skills=Skill::find()->where(['id_discipline'=>$id])->all();
-        $knowledges=Knowledge::find()->where(['id_discipline'=>$id])->all();
-
-        return $this->render('disciplineone',[
-            'one'=>$one,
-            'actions'=>$actions,
-            'skills'=>$skills,
-            'knowledges'=>$knowledges,
-        ]);
-    }
-
-    public function actionActionlist($id)
-    {
-        $searchModel = new ActionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('actionlist',[
-            'dataProvider'=>$dataProvider,
-            'id'=>$id,
-        ]);
-    }
 
     public function actionActionown($id)
     {

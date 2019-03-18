@@ -201,14 +201,12 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionActionlist($id)
+    public function actionWorkfunlist($id,$sort)
     {
-        if(Yii::$app->user->can('head'))
-            $this->layout='main';
         $searchModel = new ActionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('actionlist',[
+        return $this->render('workfunlist',[
             'dataProvider'=>$dataProvider,
             'id'=>$id,
         ]);
