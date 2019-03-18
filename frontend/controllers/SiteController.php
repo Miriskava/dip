@@ -204,10 +204,12 @@ class SiteController extends Controller
 
     public function actionWorkfunlist($id,$sort)
     {
+        if(Yii::$app->user->can('head'))
+            $this->layout='main';
         $query=Action::find();
         if($sort==1)$query=Action::find();
         if($sort==2)$query=Knowledge::find();
-        if($sort==3) $query=Skill::find();
+        if($sort==3)$query=Skill::find();
 
         $dataProvider=new ActiveDataProvider([
             'query' => $query,

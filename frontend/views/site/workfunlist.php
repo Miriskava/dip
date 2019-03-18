@@ -21,11 +21,22 @@ switch($sort) {
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
+        [
+            'class' => 'yii\grid\SerialColumn',
+
+        ],
 
         'name',
 
-        ['class' => 'yii\grid\CheckboxColumn'],
+        [
+            'class' => 'yii\grid\CheckboxColumn',
+            'checkboxOptions' => function ($model, $key, $index, $column)use($id) {
+                if($model->id_discipline==$id)
+                    return ['checked' => true];
+                else
+                    return ['checked' => false];
+            }
+        ],
     ],
 ]);
 echo Html::a('Далее',['actionown','id'=>$id],['class'=>'btn btn-primary']);?>
