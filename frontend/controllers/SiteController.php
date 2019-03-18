@@ -9,6 +9,7 @@ use common\models\Knowledge;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -203,12 +204,19 @@ class SiteController extends Controller
 
     public function actionWorkfunlist($id,$sort)
     {
-        $searchModel = new ActionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query=Action::find();
+        if($sort==1)$query=Action::find();
+        if($sort==2)$query=Knowledge::find();
+        if($sort==3) $query=Skill::find();
+
+        $dataProvider=new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         return $this->render('workfunlist',[
             'dataProvider'=>$dataProvider,
             'id'=>$id,
+            'sort'=>$sort,
         ]);
     }
 

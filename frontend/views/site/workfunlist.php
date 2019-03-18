@@ -3,7 +3,21 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 ?>
-<h1>Трудовые действия</h1>
+<?php
+$str='Трудовые действия';
+switch($sort) {
+    case 1:
+        $str = 'Трудовые действия';
+        break;
+    case 2:
+        $str = 'Необходимые знания';
+        break;
+    case 3:
+        $str = 'Необходимые умения';
+        break;
+    default:break;
+}
+?><h1><?=$str?></h1>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
