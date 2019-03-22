@@ -16,7 +16,7 @@ switch($sort) {
     default:break;
 }
 echo '<h1>'.$str.'</h1>';
-$form=ActiveForm::begin();
+$form=ActiveForm::begin(['enableClientValidation'=>false]);
 echo \yii\grid\GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
@@ -36,7 +36,7 @@ echo \yii\grid\GridView::widget([
             'label'=>'Переформулировка',
             'format' => 'raw',
             'value' => function ($data)use($form,$model) {
-                return $form->field($model,'name')->textInput()->label(false);
+                return $form->field($model,'name')->textInput([])->label(false);
             },
         ]
     ],
