@@ -7,10 +7,12 @@ use Yii;
 /**
  * This is the model class for table "can".
  *
- * @property string $id Номер
- * @property string $id_discipline Номер дисциплины
+ * @property int $id Номер
+ * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
+ * @property int $id_skill
  *
+ * @property Skill $skill
  * @property Discipline $discipline
  */
 class Can extends \yii\db\ActiveRecord
@@ -29,9 +31,10 @@ class Can extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_discipline', 'name'], 'required'],
-            [['id_discipline'], 'integer'],
+            [['id_discipline', 'name', 'id_skill'], 'required'],
+            [['id_discipline', 'id_skill'], 'integer'],
             [['name'], 'string'],
+            [['id_skill'], 'exist', 'skipOnError' => true, 'targetClass' => Skill::className(), 'targetAttribute' => ['id_skill' => 'id']],
             [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
         ];
     }
@@ -45,7 +48,16 @@ class Can extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_discipline' => 'Id Discipline',
             'name' => 'Name',
+            'id_skill' => 'Id Skill',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSkill()
+    {
+        return $this->hasOne(Skill::className(), ['id' => 'id_skill']);
     }
 
     /**

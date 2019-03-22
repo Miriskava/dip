@@ -7,13 +7,14 @@ use Yii;
 /**
  * This is the model class for table "action".
  *
- * @property string $id_action Номер
- * @property string $id_workfun Номер трудоввой функции
- * @property string $id_discipline Номер дисциплины
+ * @property int $id Номер
+ * @property int $id_workfun Номер трудоввой функции
+ * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
  *
  * @property Discipline $discipline
  * @property Workfunction $workfun
+ * @property Own[] $owns
  */
 class Action extends \yii\db\ActiveRecord
 {
@@ -31,9 +32,10 @@ class Action extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_workfun', 'name'], 'required'],
-            [['id_workfun', 'id_discipline'], 'integer'],
+            [['id', 'id_workfun', 'name'], 'required'],
+            [['id', 'id_workfun', 'id_discipline'], 'integer'],
             [['name'], 'string'],
+            [['id'], 'unique'],
             [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
             [['id_workfun'], 'exist', 'skipOnError' => true, 'targetClass' => Workfunction::className(), 'targetAttribute' => ['id_workfun' => 'id']],
         ];
@@ -45,7 +47,7 @@ class Action extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_action' => 'Id Action',
+            'id' => 'ID',
             'id_workfun' => 'Id Workfun',
             'id_discipline' => 'Id Discipline',
             'name' => 'Name',
@@ -66,5 +68,13 @@ class Action extends \yii\db\ActiveRecord
     public function getWorkfun()
     {
         return $this->hasOne(Workfunction::className(), ['id' => 'id_workfun']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOwns()
+    {
+        return $this->hasMany(Own::className(), ['id_action' => 'id']);
     }
 }

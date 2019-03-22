@@ -7,10 +7,12 @@ use Yii;
 /**
  * This is the model class for table "know".
  *
- * @property string $id Номер 
- * @property string $id_discipline Номер дисциплины
+ * @property int $id Номер 
+ * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
+ * @property int $id_knowledge
  *
+ * @property Knowledge $knowledge
  * @property Discipline $discipline
  */
 class Know extends \yii\db\ActiveRecord
@@ -29,9 +31,10 @@ class Know extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_discipline', 'name'], 'required'],
-            [['id_discipline'], 'integer'],
+            [['id_discipline', 'name', 'id_knowledge'], 'required'],
+            [['id_discipline', 'id_knowledge'], 'integer'],
             [['name'], 'string'],
+            [['id_knowledge'], 'exist', 'skipOnError' => true, 'targetClass' => Knowledge::className(), 'targetAttribute' => ['id_knowledge' => 'id']],
             [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
         ];
     }
@@ -45,7 +48,16 @@ class Know extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_discipline' => 'Id Discipline',
             'name' => 'Name',
+            'id_knowledge' => 'Id Knowledge',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKnowledge()
+    {
+        return $this->hasOne(Knowledge::className(), ['id' => 'id_knowledge']);
     }
 
     /**

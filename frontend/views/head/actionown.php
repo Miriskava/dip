@@ -1,6 +1,27 @@
 <?php
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
-foreach ($model as $mod)
-echo '<p><input id="1" name="vop2" type="checkbox" checked>'.$mod->name.'<input style="float: right" type="text"></p>';
-echo Html::a('Далее',['discipline'],['class'=>'btn btn-primary']);
+ActiveForm::begin();
+echo \yii\grid\GridView::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => [
+
+        [
+            'class' => 'yii\grid\CheckboxColumn',
+            'checkboxOptions' => function ($model, $key, $index, $column)use($check) {
+                if($model->id_discipline==2)
+                    return ['checked' => true];
+                else
+                    return ['checked' => false];
+            }
+        ],
+
+        'name',
+
+
+
+    ],
+]);
+echo Html::submitButton('Далее',['class'=>'btn btn-primary']);
+ActiveForm::end();

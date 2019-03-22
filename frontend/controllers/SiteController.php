@@ -3,9 +3,12 @@ namespace frontend\controllers;
 
 use common\models\Action;
 use common\models\ActionSearch;
+use common\models\Can;
 use common\models\Discipline;
 use common\models\DisciplineSearch;
+use common\models\Know;
 use common\models\Knowledge;
+use common\models\Own;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidParamException;
@@ -33,11 +36,11 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','discipline'],
+                'only' => ['logout', 'discipline'],
                 'rules' => [
 
                     [
-                        'actions' => ['logout','discipline'],
+                        'actions' => ['logout', 'discipline'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -161,21 +164,21 @@ class SiteController extends Controller
 
     public function actionDiscipline()
     {
-        if(Yii::$app->user->can('head'))
-            $this->layout='main';
+        if (Yii::$app->user->can('head'))
+            $this->layout = 'main';
         $searchModel = new DisciplineSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('discipline',[
-            'searchModel'=>$searchModel,
-            'dataProvider'=>$dataProvider,
+        return $this->render('discipline', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
     public function actionCreatediscipline()
     {
-        if(Yii::$app->user->can('head'))
-            $this->layout='main';
-        $model=new Discipline();
+        if (Yii::$app->user->can('head'))
+            $this->layout = 'main';
+        $model = new Discipline();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['discipline']);
         } else {
@@ -187,48 +190,88 @@ class SiteController extends Controller
 
     public function actionDisciplineone($id)
     {
-        if(Yii::$app->user->can('head'))
-            $this->layout='main';
-        $one=Discipline::findOne($id);
-        $actions=Action::find()->where(['id_discipline'=>$id])->all();
-        $skills=Skill::find()->where(['id_discipline'=>$id])->all();
-        $knowledges=Knowledge::find()->where(['id_discipline'=>$id])->all();
+        if (Yii::$app->user->can('head'))
+            $this->layout = 'main';
+        $one = Discipline::findOne($id);
+        $actions = Action::find()->where(['id_discipline' => $id])->all();
+        $skills = Skill::find()->where(['id_discipline' => $id])->all();
+        $knowledges = Knowledge::find()->where(['id_discipline' => $id])->all();
 
-        return $this->render('disciplineone',[
-            'one'=>$one,
-            'actions'=>$actions,
-            'skills'=>$skills,
-            'knowledges'=>$knowledges,
+        return $this->render('disciplineone', [
+            'one' => $one,
+            'actions' => $actions,
+            'skills' => $skills,
+            'knowledges' => $knowledges,
         ]);
     }
 
-    public function actionWorkfunlist($id,$sort)
+    public function actionWorkfunlist($id, $sort)
     {
-        if(Yii::$app->user->can('head'))
-            $this->layout='main';
-        $query=Action::find();
-        if($sort==1)$query=Action::find();
-        if($sort==2)$query=Knowledge::find();
-        if($sort==3)$query=Skill::find();
+        if (Yii::$app->user->can('head'))
+            $this->layout = 'main';
+        $query = Action::find();
+        if ($sort == 1) $query = Action::find();
+        if ($sort == 2) $query = Knowledge::find();
+        if ($sort == 3) $query = Skill::find();
 
-        $dataProvider=new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        return $this->render('workfunlist',[
-            'dataProvider'=>$dataProvider,
-            'id'=>$id,
-            'sort'=>$sort,
-        ]);
+        if ($check = Yii::$app->request->post('selection')) {
+            $model=new Own();
+
+            return $this->redirect(['actionown', 'id' => $id, 'sort'=>$sort,'check' => $check]);
+        } else {
+            return $this->render('workfunlist', [
+                'dataProvider' => $dataProvider,
+                'id' => $id,
+                'sort' => $sort,
+            ]);
+        }
     }
 
-    public function actionActionown($id)
+    public function actionActionown($id, $sort, array $check)
     {
-        if(Yii::$app->user->can('head'))
-            $this->layout='main';
-        $model=Action::find()->all();
-        return $this->render('actionown',[
-            'model'=>$model,
+        if (Yii::$app->user->can('head'))
+            $this->layout = 'main';
+
+        $query = Action::find();
+        $model=new Own();
+        if ($sort == 1) {$query = Action::find()->where(['id'=>$check]);$model=new Own();}
+        if ($sort == 2) {$query = Knowledge::find()->where(['id'=>$check]);$model=new Know();}
+        if ($sort == 3) {$query = Skill::find()->where(['id'=>$check]);$model=new Can();}
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
         ]);
+
+        if ($ch=Yii::$app->request->post('selection')) {
+            $m=$query->all();
+            foreach ($ch as $check){
+                $rez=Action::findOne($check);
+                if ($sort == 1)$rez=Action::findOne($check);
+                if ($sort == 2)$rez=Knowledge::findOne($check);
+                if ($sort == 3)$rez=Skill::findOne($check);
+                $rez->id_discipline=$id;
+                $rez->save();
+                foreach ($m as $mm) {
+                    if ($mm->id != $check){
+                        $mm->id_discipline=null;
+                        $mm->save();
+                    }
+                }
+            }
+            return $this->redirect(['disciplineone','id'=>$id]);
+        }
+        else {
+        return $this->render('actionown', [
+            'dataProvider' => $dataProvider,
+            'id' => $id,
+            'check' => $check,
+            'sort' => $sort,
+            'model' => $model,
+        ]);
+        }
     }
 }

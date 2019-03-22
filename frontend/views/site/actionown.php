@@ -1,6 +1,45 @@
 <?php
 use yii\helpers\Html;
-echo '<h1>Трудовые действия и владеть</h1>';
-foreach ($model as $mod)
-echo '<h4 style="height: 50px;"><input id="1" name="vop2" type="checkbox" checked>'.$mod->name.'<input style="height: 50px;width: 400px;float: right" type="text"></h4>';
-echo Html::a('Далее',['discipline'],['class'=>'btn btn-primary']);
+use yii\widgets\ActiveForm;
+
+$str='Владеть';
+switch($sort) {
+    case 1:
+        $str = 'Владеть';
+        break;
+    case 2:
+        $str = 'Знать';
+        break;
+    case 3:
+        $str = 'Уметь';
+        break;
+    default:break;
+}
+echo '<h1>'.$str.'</h1>';
+$form=ActiveForm::begin();
+echo \yii\grid\GridView::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => [
+
+        [
+            'class' => 'yii\grid\CheckboxColumn',
+            'checkboxOptions' => function ($model, $key, $index, $column)use($check) {
+                if (in_array($model->id,$check))
+                        return ['checked' => true];
+                    else
+                        return ['checked' => false];
+            }
+        ],
+
+        'name',
+        [
+            'label'=>'Переформулировка',
+            'format' => 'raw',
+            'value' => function ($data)use($form,$model) {
+                return $form->field($model,'name')->textInput()->label(false);
+            },
+        ]
+    ],
+]);
+echo Html::submitButton('Далее',['class'=>'btn btn-primary']);
+ActiveForm::end();

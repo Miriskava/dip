@@ -1,6 +1,7 @@
 <?php
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 ?>
 <?php
@@ -18,7 +19,9 @@ switch($sort) {
     default:break;
 }
 ?><h1><?=$str?></h1>
-<?= GridView::widget([
+    <?php
+ActiveForm::begin();
+echo GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
         [
@@ -39,4 +42,7 @@ switch($sort) {
         ],
     ],
 ]);
-echo Html::a('Далее',['actionown','id'=>$id],['class'=>'btn btn-primary']);?>
+echo Html::submitButton('Далее',['class'=>'btn btn-primary']);//Html::a('Далее',['actionown','id'=>$id],['class'=>'btn btn-primary']);
+ActiveForm::end();
+?>
+
