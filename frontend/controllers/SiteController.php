@@ -12,6 +12,7 @@ use common\models\Own;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -199,7 +200,7 @@ class SiteController extends Controller
 
         $own=Own::find()->where(['id_discipline' => $id])->all();
         $know=Know::find()->where(['id_discipline' => $id])->all();
-        $can=Own::find()->where(['id_discipline' => $id])->all();
+        $can=Can::find()->where(['id_discipline' => $id])->all();
 
         return $this->render('disciplineone', [
             'one' => $one,
@@ -244,14 +245,58 @@ class SiteController extends Controller
             $this->layout = 'main';
 
         $query = Action::find();
-        $model=new Own();
-        if ($sort == 1) {$query = Action::find()->where(['id'=>$check]);$model=new Own();}
-        if ($sort == 2) {$query = Knowledge::find()->where(['id'=>$check]);$model=new Know();}
-        if ($sort == 3) {$query = Skill::find()->where(['id'=>$check]);$model=new Can();}
+        if ($sort == 1) {$query = Action::find()->where(['id'=>$check]);}
+        if ($sort == 2) {$query = Knowledge::find()->where(['id'=>$check]);}
+        if ($sort == 3) {$query = Skill::find()->where(['id'=>$check]);}
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $count=count($check);
+        $model=[new Own()];
+        for($i=1;$i<$count;$i++)
+        {
+            $model[]=new Own();
+        }
+        if($sort==1){
+            $model=[new Own()];
+            for($i=1;$i<$count;$i++)
+            {
+                $model[]=new Own();
+            }
+        }
+        if($sort==2){
+            $model=[new Know()];
+            for($i=1;$i<$count;$i++)
+            {
+                $model[]=new Know();
+            }
+        }
+        if($sort==3){
+            $model=[new Can()];
+            for($i=1;$i<$count;$i++)
+            {
+                $model[]=new Can();
+            }
+        }
+
+        if (Model::loadMultiple($model,Yii::$app->request->post())){
+            $ch=Yii::$app->request->post('selection');
+            $kol=0;
+            foreach ($model as $mod) {
+                $lok=0;
+                foreach ($check as $c) {
+                    if($kol==$lok) {
+                        $mod->id_sort=$c;
+                        $mod->id_discipline = $id;
+                        $mod->save(false);
+                    }
+                    $lok++;
+                }
+                $kol++;
+            }
+        }
 
         if ($ch=Yii::$app->request->post('selection')) {
             $m=Action::find()->all();

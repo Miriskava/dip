@@ -10,9 +10,9 @@ use Yii;
  * @property int $id Номер
  * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
- * @property int $id_action
+ * @property int $id_sort
  *
- * @property Action $action
+ * @property Action $sort
  * @property Discipline $discipline
  */
 class Own extends \yii\db\ActiveRecord
@@ -31,10 +31,10 @@ class Own extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_discipline', 'name', 'id_action'], 'required'],
-            [['id_discipline', 'id_action'], 'integer'],
+            [['id_discipline', 'name', 'id_sort'], 'required'],
+            [['id_discipline', 'id_sort'], 'integer'],
             [['name'], 'string'],
-            [['id_action'], 'exist', 'skipOnError' => true, 'targetClass' => Action::className(), 'targetAttribute' => ['id_action' => 'id']],
+            [['id_sort'], 'exist', 'skipOnError' => true, 'targetClass' => Action::className(), 'targetAttribute' => ['id_sort' => 'id']],
             [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
         ];
     }
@@ -48,16 +48,16 @@ class Own extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_discipline' => 'Id Discipline',
             'name' => 'Name',
-            'id_action' => 'Id Action',
+            'id_sort' => 'Id Sort',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAction()
+    public function getSort()
     {
-        return $this->hasOne(Action::className(), ['id' => 'id_action']);
+        return $this->hasOne(Action::className(), ['id' => 'id_sort']);
     }
 
     /**

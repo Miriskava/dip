@@ -10,9 +10,9 @@ use Yii;
  * @property int $id Номер 
  * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
- * @property int $id_knowledge
+ * @property int $id_sort
  *
- * @property Knowledge $knowledge
+ * @property Knowledge $sort
  * @property Discipline $discipline
  */
 class Know extends \yii\db\ActiveRecord
@@ -31,10 +31,10 @@ class Know extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_discipline', 'name', 'id_knowledge'], 'required'],
-            [['id_discipline', 'id_knowledge'], 'integer'],
+            [['id_discipline', 'name', 'id_sort'], 'required'],
+            [['id_discipline', 'id_sort'], 'integer'],
             [['name'], 'string'],
-            [['id_knowledge'], 'exist', 'skipOnError' => true, 'targetClass' => Knowledge::className(), 'targetAttribute' => ['id_knowledge' => 'id']],
+            [['id_sort'], 'exist', 'skipOnError' => true, 'targetClass' => Knowledge::className(), 'targetAttribute' => ['id_sort' => 'id']],
             [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
         ];
     }
@@ -48,16 +48,16 @@ class Know extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_discipline' => 'Id Discipline',
             'name' => 'Name',
-            'id_knowledge' => 'Id Knowledge',
+            'id_sort' => 'Id Sort',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getKnowledge()
+    public function getSort()
     {
-        return $this->hasOne(Knowledge::className(), ['id' => 'id_knowledge']);
+        return $this->hasOne(Knowledge::className(), ['id' => 'id_sort']);
     }
 
     /**

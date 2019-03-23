@@ -10,9 +10,9 @@ use Yii;
  * @property int $id Номер
  * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
- * @property int $id_skill
+ * @property int $id_sort
  *
- * @property Skill $skill
+ * @property Skill $sort
  * @property Discipline $discipline
  */
 class Can extends \yii\db\ActiveRecord
@@ -31,10 +31,10 @@ class Can extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_discipline', 'name', 'id_skill'], 'required'],
-            [['id_discipline', 'id_skill'], 'integer'],
+            [['id_discipline', 'name', 'id_sort'], 'required'],
+            [['id_discipline', 'id_sort'], 'integer'],
             [['name'], 'string'],
-            [['id_skill'], 'exist', 'skipOnError' => true, 'targetClass' => Skill::className(), 'targetAttribute' => ['id_skill' => 'id']],
+            [['id_sort'], 'exist', 'skipOnError' => true, 'targetClass' => Skill::className(), 'targetAttribute' => ['id_sort' => 'id']],
             [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
         ];
     }
@@ -48,16 +48,16 @@ class Can extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_discipline' => 'Id Discipline',
             'name' => 'Name',
-            'id_skill' => 'Id Skill',
+            'id_sort' => 'Id Sort',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSkill()
+    public function getSort()
     {
-        return $this->hasOne(Skill::className(), ['id' => 'id_skill']);
+        return $this->hasOne(Skill::className(), ['id' => 'id_sort']);
     }
 
     /**
