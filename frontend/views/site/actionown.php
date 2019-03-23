@@ -32,13 +32,7 @@ echo \yii\grid\GridView::widget([
         ],
 
         'name',
-        [
-            'label'=>'Переформулировка',
-            'format' => 'raw',
-            'value' => function ($data)use($form,$model) {
-                return $form->field($model,'name')->textInput([])->label(false);
-            },
-        ]
+
     ],
 ]);
 echo Html::submitButton('Далее',['class'=>'btn btn-primary']);

@@ -194,14 +194,21 @@ class SiteController extends Controller
             $this->layout = 'main';
         $one = Discipline::findOne($id);
         $actions = Action::find()->where(['id_discipline' => $id])->all();
-        $skills = Skill::find()->where(['id_discipline' => $id])->all();
         $knowledges = Knowledge::find()->where(['id_discipline' => $id])->all();
+        $skills = Skill::find()->where(['id_discipline' => $id])->all();
+
+        $own=Own::find()->where(['id_discipline' => $id])->all();
+        $know=Know::find()->where(['id_discipline' => $id])->all();
+        $can=Own::find()->where(['id_discipline' => $id])->all();
 
         return $this->render('disciplineone', [
             'one' => $one,
             'actions' => $actions,
             'skills' => $skills,
             'knowledges' => $knowledges,
+            'own'=>$own,
+            'know'=>$know,
+            'can'=>$can,
         ]);
     }
 
@@ -247,7 +254,10 @@ class SiteController extends Controller
         ]);
 
         if ($ch=Yii::$app->request->post('selection')) {
-            $m=$query->all();
+            $m=Action::find()->all();
+            if ($sort == 1)$m=Action::find()->all();
+            if ($sort == 2)$m=Knowledge::find()->all();
+            if ($sort == 3)$m=Skill::find()->all();
             foreach ($ch as $check){
                 $rez=Action::findOne($check);
                 if ($sort == 1)$rez=Action::findOne($check);
@@ -257,7 +267,7 @@ class SiteController extends Controller
                 $rez->save();
                 foreach ($m as $mm) {
                     if ($mm->id != $check){
-                        $mm->id_discipline=null;
+                        $mm->id_discipline=NULL;
                         $mm->save();
                     }
                 }

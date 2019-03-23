@@ -16,9 +16,15 @@ echo '<h2>'.$one->name.'</h2>';
 echo '<h3>Владеть:</h3>';
 foreach ($actions as $act)
     echo '<li>'.$act->name.'</li>';
+foreach ($own as $o)
+    echo '<li>'.$o->name.'</li>';
 echo '<h3>Знать:</h3>';
-foreach ($knowledges as $know)
-    echo '<li>'.$know->name.'</li>';
+foreach ($knowledges as $knowledge)
+    echo '<li>'.$knowledge->name.'</li>';
+foreach ($know as $k)
+    echo '<li>'.$k->name.'</li>';
 echo '<h3>Уметь:</h3>';
 foreach ($skills as $skill)
     echo '<li>'.$skill->name.'</li>';
+foreach ($can as $c)
+    echo '<li>'.$c->name.'</li>';
