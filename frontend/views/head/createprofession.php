@@ -8,7 +8,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Добавление профессинального стандарта';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div >
     <h1><?= Html::encode($this->title) ?></h1>

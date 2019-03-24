@@ -3,7 +3,6 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 $this->title = 'Профессиональные стандарты';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 
     <h1><?=$this->title?></h1>

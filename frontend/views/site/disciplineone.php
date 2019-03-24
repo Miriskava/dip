@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Дисциплины';
-$this->params['breadcrumbs'][] = $this->title;
 
 echo '<div class="row">'.
     Html::a('Управление трудовыми действиями',['workfunlist','id'=>$one->id,'sort'=>1],['class'=>'btn btn-warning']).' '.
