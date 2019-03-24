@@ -76,24 +76,6 @@ class HeadController extends Controller
         ];
     }
 
-    public function actionDiscipline()
-    {
-        $searchModel = new DisciplineSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('discipline',[
-            'searchModel'=>$searchModel,
-            'dataProvider'=>$dataProvider,
-        ]);
-    }
-
-
-    public function actionActionown($id)
-    {
-        $model=Action::find()->all();
-        return $this->render('actionown',[
-            'model'=>$model,
-        ]);
-    }
 
     public function actionPlan()
     {

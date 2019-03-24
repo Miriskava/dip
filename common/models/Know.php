@@ -46,9 +46,9 @@ class Know extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_discipline' => 'Id Discipline',
-            'name' => 'Name',
-            'id_sort' => 'Id Sort',
+            'id_discipline' => 'Дисциплина',
+            'name' => 'Наименование',
+            'id_sort' => 'Необходимое знание',
         ];
     }
 

@@ -16,10 +16,14 @@ switch($sort) {
     default:break;
 }
 echo '<h1>'.$str.'</h1>';
-$form=ActiveForm::begin(['enableClientValidation'=>false]);
 echo '<div class="row"><div class="col-md-6 order-md-1"> ';
+echo '<h4>Трудовые функции:</h4>';
+$form=ActiveForm::begin(['enableClientValidation'=>false]);
 echo \yii\grid\GridView::widget([
+    'id'=>'rezult',
+    'summary' => false,
     'dataProvider' => $dataProvider,
+    'showHeader'=> false,
     'columns' => [
 
         [
@@ -37,7 +41,8 @@ echo \yii\grid\GridView::widget([
     ],
 ]);
 echo Html::submitButton('Далее',['class'=>'btn btn-primary']);
-echo '</div><div class="col-md-6 order-md-2>';
+echo '</div><div class="col-md-6 order-md-2 form">';
+echo '<h4>Переформулировка:</h4>';
 foreach ($model as $index=>$mod)
     echo $form->field($mod,"[$index]name")->textarea(['rows'=>2])->label(false);
 echo '</div></div>';

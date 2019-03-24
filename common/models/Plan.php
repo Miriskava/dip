@@ -51,9 +51,9 @@ class Plan extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_profession' => 'Профессиональный стандарт',
-            'code' => 'Code',
-            'name' => 'Name',
-            'date' => 'Date',
+            'code' => 'Код',
+            'name' => 'Наименование',
+            'date' => 'Дата утвреждения',
         ];
     }
 

@@ -48,9 +48,9 @@ class Action extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_workfun' => 'Id Workfun',
-            'id_discipline' => 'Id Discipline',
-            'name' => 'Name',
+            'id_workfun' => 'Трудовая функция',
+            'id_discipline' => 'Дисциплина',
+            'name' => 'Наименование',
         ];
     }
 

@@ -47,10 +47,10 @@ class General extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_profession' => 'Id Profession',
-            'code' => 'Code',
-            'name' => 'Name',
-            'level' => 'Level',
+            'id_profession' => 'Профессиональный старвндарт',
+            'code' => 'Код',
+            'name' => 'Наименование',
+            'level' => 'Уровень квалификации',
         ];
     }
 

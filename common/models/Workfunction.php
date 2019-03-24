@@ -50,10 +50,10 @@ class Workfunction extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_general' => 'Id General',
-            'code' => 'Code',
-            'name' => 'Name',
-            'level' => 'Level',
+            'id_general' => 'Обобщенная трудовая функция',
+            'code' => 'Код',
+            'name' => 'Наименование',
+            'level' => 'Уровень квалификации',
         ];
     }
 

@@ -47,9 +47,9 @@ class Knowledge extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_workfunction' => 'Id Workfunction',
-            'id_discipline' => 'Id Discipline',
-            'name' => 'Name',
+            'id_workfun' => 'Трудовая функция',
+            'id_discipline' => 'Дисциплина',
+            'name' => 'Наименование',
         ];
     }
 

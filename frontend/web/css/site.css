@@ -140,3 +140,15 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+#rezult thead{
+    height: 40px;
+}
+
+#rezult td{
+    height: 60px;
+}
+
+.form .form-group {
+    margin-bottom: -4px;
+}
