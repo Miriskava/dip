@@ -5,8 +5,8 @@ use yii\helpers\Html;
 $this->title = 'Трудовые функции';
 ?>
 
-    <h1><?=$this->title?></h1>
-<h2>Трудовые действия</h2>
+<h2><?=$prof->name?></h2>
+<h3>Трудовые действия</h3>
 <?=Html::a('Добавить',['createprofession'],['class'=>'btn btn-success'])?>
 <?= GridView::widget([
     'dataProvider' => $action,
@@ -16,7 +16,7 @@ $this->title = 'Трудовые функции';
         ['class' => 'yii\grid\ActionColumn'],
     ],
 ]); ?>
-<h2>Необходимые умения</h2>
+<h3>Необходимые умения</h3>
 <?=Html::a('Добавить',['createprofession'],['class'=>'btn btn-success'])?>
 <?= GridView::widget([
     'dataProvider' => $skill,
@@ -26,7 +26,7 @@ $this->title = 'Трудовые функции';
         ['class' => 'yii\grid\ActionColumn'],
     ],
 ]); ?>
-<h2>Необходимые знания</h2>
+<h3>Необходимые знания</h3>
 <?=Html::a('Добавить',['createprofession'],['class'=>'btn btn-success'])?>
 <?= GridView::widget([
     'dataProvider' => $knowledge,

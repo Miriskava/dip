@@ -282,12 +282,11 @@ class SiteController extends Controller
         }
 
         if (Model::loadMultiple($model,Yii::$app->request->post())){
-            $ch=Yii::$app->request->post('selection');
             $kol=0;
             foreach ($model as $mod) {
                 $lok=0;
                 foreach ($check as $c) {
-                    if($kol==$lok) {
+                    if($kol==$lok && $mod->name!="") {
                         $mod->id_sort=$c;
                         $mod->id_discipline = $id;
                         $mod->save(false);

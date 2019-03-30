@@ -141,6 +141,10 @@ a.desc:after {
     outline: none;
 }
 
+.grid-view td {
+    white-space: inherit;
+}
+
 #rezult thead{
     height: 40px;
 }

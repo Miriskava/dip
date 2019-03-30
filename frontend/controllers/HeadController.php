@@ -122,28 +122,34 @@ class HeadController extends Controller
 
     public function actionGeneral($id)
     {
+        $prof=Profession::findOne($id);
         $query=General::find()->where(['id_profession'=>$id]);
         $dataProvider=new ActiveDataProvider([
             'query' => $query,
         ]);
         return $this->render('profession/general',[
             'dataProvider'=>$dataProvider,
+            'prof'=>$prof,
         ]);
     }
 
-    public function actionWorkfunction($id)
+    public function actionWorkfunction($id,$prof)
     {
+        $p=Profession::findOne($prof);
         $query=Workfunction::find()->where(['id_general'=>$id]);
         $dataProvider=new ActiveDataProvider([
             'query' => $query,
         ]);
         return $this->render('profession/workfunction',[
             'dataProvider'=>$dataProvider,
+            'prof'=>$p,
         ]);
     }
 
-    public function actionSorts($id)
+    public function actionSorts($id,$prof)
     {
+        $p=Profession::findOne($prof);
+
         $query1=Action::find()->where(['id_workfun'=>$id]);
         $action=new ActiveDataProvider([
             'query' => $query1,
@@ -162,6 +168,7 @@ class HeadController extends Controller
             'action'=>$action,
             'skill'=>$skill,
             'knowledge'=>$knowledge,
+            'prof'=>$p,
         ]);
     }
 }
