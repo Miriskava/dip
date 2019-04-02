@@ -9,7 +9,6 @@ $this->title = 'Профессиональные стандарты';
 <?=Html::a('Добавить',['createprofession'],['class'=>'btn btn-success'])?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 

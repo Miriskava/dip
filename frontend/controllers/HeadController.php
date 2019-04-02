@@ -101,10 +101,9 @@ class HeadController extends Controller
 
     public function actionProfession()
     {
-        $searchModel = new ProfessionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = Profession::find();
+        $dataProvider = new ActiveDataProvider(['query'=>$query]);
         return $this->render('profession/profession',[
-            'searchModel'=>$searchModel,
             'dataProvider'=>$dataProvider,
         ]);
     }

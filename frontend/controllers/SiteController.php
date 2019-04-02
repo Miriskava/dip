@@ -5,7 +5,6 @@ use common\models\Action;
 use common\models\ActionSearch;
 use common\models\Can;
 use common\models\Discipline;
-use common\models\DisciplineSearch;
 use common\models\Know;
 use common\models\Knowledge;
 use common\models\Own;
@@ -167,10 +166,9 @@ class SiteController extends Controller
     {
         if (Yii::$app->user->can('head'))
             $this->layout = 'main';
-        $searchModel = new DisciplineSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = Discipline::find();
+        $dataProvider = new ActiveDataProvider(['query'=>$query]);
         return $this->render('discipline', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

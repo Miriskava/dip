@@ -3,21 +3,19 @@
 namespace common\models;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "profession".
  *
- * @property string $id Номер
- * @property string $id_plan Номер учебного плана
+ * @property int $id Номер
  * @property string $code Код
  * @property string $name Наименование
  * @property string $date Дата утверждения
  * @property string $aim Основная цель деятельности
  *
  * @property General[] $generals
+ * @property ProfPlan[] $profPlans
  * @property Plan[] $plans
- * @property Plan $plan
  */
 class Profession extends \yii\db\ActiveRecord
 {
@@ -35,13 +33,11 @@ class Profession extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_plan', 'code', 'name', 'date', 'aim'], 'required'],
-            [['id_plan'], 'integer'],
+            [['code', 'name', 'date', 'aim'], 'required'],
             [['date'], 'safe'],
             [['aim'], 'string'],
             [['code'], 'string', 'max' => 6],
             [['name'], 'string', 'max' => 255],
-            [['id_plan'], 'exist', 'skipOnError' => true, 'targetClass' => Plan::className(), 'targetAttribute' => ['id_plan' => 'id']],
         ];
     }
 
@@ -52,11 +48,10 @@ class Profession extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_plan' => 'Учебный план',
-            'code' => 'Код',
-            'name' => 'Наименование ',
-            'date' => 'Дата утверждения',
-            'aim' => 'Основная цель вида профессиональной деятельности',
+            'code' => 'Code',
+            'name' => 'Name',
+            'date' => 'Date',
+            'aim' => 'Aim',
         ];
     }
 
@@ -71,21 +66,16 @@ class Profession extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPlans()
+    public function getProfPlans()
     {
-        return $this->hasMany(Plan::className(), ['id_profession' => 'id']);
+        return $this->hasMany(ProfPlan::className(), ['id_prof' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPlan()
+    public function getPlans()
     {
-        return $this->hasOne(Plan::className(), ['id' => 'id_plan']);
-    }
-
-    public function getPlanList()
-    {
-        return ArrayHelper::map(Plan::find()->all(),'id','name','date');
+        return $this->hasMany(Plan::className(), ['id' => 'id_plan'])->viaTable('prof_plan', ['id_prof' => 'id']);
     }
 }

@@ -9,7 +9,6 @@ $this->title = 'Дисциплины';
 if(Yii::$app->user->can('head')) echo Html::a('Добавить',['creatediscipline'],['class'=>'btn btn-success'])?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 
