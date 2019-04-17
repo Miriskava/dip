@@ -41,6 +41,7 @@ AppAsset::register($this);
     } else {
 
         $menuItems = [
+            ['label' => 'Все дисциплины', 'url' => ['/head/all']],
             ['label' => 'Дисциплины', 'url' => ['/site/discipline']],
             ['label' => 'Профессиональные стандарты', 'url' => ['/head/profession']],
             ['label' => 'Учебные планы', 'url' => ['/head/plan']],
@@ -48,7 +49,7 @@ AppAsset::register($this);
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout (' . Yii::$app->user->identity->surname . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

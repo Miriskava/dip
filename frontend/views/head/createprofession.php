@@ -4,6 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\Profession */
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -21,7 +22,22 @@ $this->title = 'Добавление профессинального станд
             <?= $form->field($model, 'date')->textInput() ?>
 
             <?= $form->field($model, 'aim')->textarea() ?>
-            <?= $form->field($model, 'id_plan')->dropDownList($model->planlist,['prompt'=>"Выберите..."]) ?>
+            <br><h5 style="margin-left:10px">Учебный план</h5>
+            <?= '<div style="overflow-y:scroll;height:250px"'.GridView::widget([
+                'summary' => false,
+                'dataProvider' => $dataProvider,
+                'showHeader'=> false,
+                'columns' => [
+
+                    [
+                        'class' => 'yii\grid\CheckboxColumn',
+                    ],
+
+                    'name',
+                    'date',
+
+                ],
+            ]);?>
 
             <div class="form-group">
                 <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>

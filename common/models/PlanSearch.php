@@ -18,7 +18,7 @@ class PlanSearch extends Plan
     public function rules()
     {
         return [
-            [['id', 'id_profession'], 'integer'],
+            [['id'], 'integer'],
             [['code', 'name', 'date'], 'safe'],
         ];
     }
@@ -60,7 +60,6 @@ class PlanSearch extends Plan
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_profession' => $this->id_profession,
             'date' => $this->date,
         ]);
 

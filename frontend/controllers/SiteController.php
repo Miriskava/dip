@@ -5,10 +5,14 @@ use common\models\Action;
 use common\models\ActionSearch;
 use common\models\Can;
 use common\models\Discipline;
+use common\models\DisciplineSearch;
+use common\models\PLanSearch;
 use common\models\Know;
 use common\models\Knowledge;
 use common\models\Own;
 use common\models\Plan;
+use common\models\ProfPlan;
+use common\models\PlanDisc;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidParamException;
@@ -167,28 +171,11 @@ class SiteController extends Controller
     {
         if (Yii::$app->user->can('head'))
             $this->layout = 'main';
-        $query = Discipline::find();
+        $query = Discipline::find()->where(['user'=>Yii::$app->user->identity->id]);
         $dataProvider = new ActiveDataProvider(['query'=>$query]);
         return $this->render('discipline', [
             'dataProvider' => $dataProvider,
         ]);
-    }
-
-    public function actionCreatediscipline()
-    {
-        if (Yii::$app->user->can('head'))
-            $this->layout = 'main';
-        $model = new Discipline();
-        $query=Plan::find();
-        $dataProvider=new ActiveDataProvider(['query'=>$query,'pagination'=>['pageSize' => 5]]);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['discipline']);
-        } else {
-            return $this->render('creatediscipline', [
-                'model' => $model,
-                'dataProvider'=>$dataProvider,
-            ]);
-        }
     }
 
     public function actionDisciplineone($id)

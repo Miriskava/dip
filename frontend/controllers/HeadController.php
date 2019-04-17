@@ -16,6 +16,7 @@ use common\models\DisciplineSearch;
 use common\models\General;
 use common\models\Knowledge;
 use common\models\Plan;
+use common\models\PlanDisc;
 use common\models\PlanSearch;
 use common\models\Profession;
 use common\models\ProfessionSearch;
@@ -110,11 +111,14 @@ class HeadController extends Controller
     public function actionCreateprofession()
     {
         $model=new Profession();
+        $query=Plan::find();
+        $dataProvider=new ActiveDataProvider(['query'=>$query]);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['profession']);
         } else {
             return $this->render('createprofession', [
                 'model' => $model,
+                'dataProvider'=>$dataProvider,
             ]);
         }
     }
@@ -170,4 +174,40 @@ class HeadController extends Controller
             'prof'=>$p,
         ]);
     }
+
+    public function actionAll(){
+        $query=Discipline::find();
+        $dataProvaider=new ActiveDataProvider([
+            'query'=>$query,
+        ]);
+        return $this->render('profession/all',[
+            'dataProvider'=>$dataProvaider,
+        ]);
+    }
+
+    public function actionCreatediscipline()
+    {
+        if (Yii::$app->user->can('head'))
+            $this->layout = 'main';
+        $model = new Discipline();
+        $searchModel=new PLanSearch;
+        $dataProvider=$searchModel->search(Yii::$app->request->queryParams);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $check_plan=Yii::$app->request->post('selection');
+            for($i=0;$i<count($check_plan);$i++) {
+                $plan_dis[$i]=new PlanDisc();
+                $plan_dis[$i]->id_discipline=$model->id;
+                $plan_dis[$i]->id_plan=$check_plan[$i];
+                $plan_dis[$i]->save();
+            }
+            return $this->redirect(['discipline']);
+        } else {
+            return $this->render('creatediscipline', [
+                'model' => $model,
+                'dataProvider'=>$dataProvider,
+                'searchModel'=>$searchModel,
+            ]);
+        }
+    }
+
 }

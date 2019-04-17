@@ -1,4 +1,5 @@
 <?php
+use yii\bootstrap\Tabs;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
@@ -6,33 +7,40 @@ $this->title = 'Трудовые функции';
 ?>
 
 <h2><?=$prof->name?></h2>
-<h3>Трудовые действия</h3>
-<?=Html::a('Добавить',['createprofession'],['class'=>'btn btn-success'])?>
-<?= GridView::widget([
-    'dataProvider' => $action,
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-        'name',
-        ['class' => 'yii\grid\ActionColumn'],
-    ],
-]); ?>
-<h3>Необходимые умения</h3>
-<?=Html::a('Добавить',['createprofession'],['class'=>'btn btn-success'])?>
-<?= GridView::widget([
-    'dataProvider' => $skill,
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-        'name',
-        ['class' => 'yii\grid\ActionColumn'],
-    ],
-]); ?>
-<h3>Необходимые знания</h3>
-<?=Html::a('Добавить',['createprofession'],['class'=>'btn btn-success'])?>
-<?= GridView::widget([
-    'dataProvider' => $knowledge,
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-        'name',
-        ['class' => 'yii\grid\ActionColumn'],
-    ],
-]); ?>
+
+
+<?php
+for($i=0;$i<3;$i++) {
+    if($i==0){
+        $head='Трудовые действия';
+        $s=$action;
+    }
+    else if($i==1){
+        $head='Необходимые умения';
+        $s=$skill;
+    }
+    else{
+        $head='Необходимые знания';
+        $s=$knowledge;
+    }
+    $t[$i] = [
+        'label' => $head,
+        'content' => '<h3>'.$head.'</h3>'.Html::a('Добавить',['createprofession'],['class'=>'btn btn-success']).
+            GridView::widget([
+                'dataProvider' => $s,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'name',
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]),
+        'headerOptions'=>['class'=>'he']
+    ];
+}
+echo Tabs::widget([
+    'items' =>$t,
+    'options' => ['tag' => 'div'],
+    'itemOptions' => ['tag' => 'div'],
+    'clientOptions' => ['collapsible' => false],
+]);
+?>

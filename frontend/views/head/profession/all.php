@@ -2,9 +2,10 @@
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-$this->title = 'Дисциплины';
+$this->title = 'Список дисциплин';
 ?>
 <h1><?=$this->title?></h1>
+<?=Html::a('Добавить',['creatediscipline'],['class'=>'btn btn-success'])?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [

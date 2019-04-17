@@ -18,7 +18,7 @@ class DisciplineSearch extends Discipline
     public function rules()
     {
         return [
-            [['id', 'id_plan'], 'integer'],
+            [['id', 'user'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -60,7 +60,7 @@ class DisciplineSearch extends Discipline
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_plan' => $this->id_plan,
+            'user' => $this->user,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
