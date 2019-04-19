@@ -34,6 +34,7 @@ AppAsset::register($this);
         'options' => [
             'class' => 'navbar-fixed-top',
         ],
+        'screenReaderToggleText'=>'Меню',
     ]);
     if (Yii::$app->user->isGuest) {
 
@@ -46,7 +47,7 @@ AppAsset::register($this);
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->surname . ')',
+                'Выйти (' . Yii::$app->user->identity->surname . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

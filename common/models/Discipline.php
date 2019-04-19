@@ -9,9 +9,11 @@ use Yii;
  *
  * @property int $id Номер
  * @property string $name Наименование
+ * @property int $id_user
  *
  * @property Action[] $actions
  * @property Can[] $cans
+ * @property User $user
  * @property Know[] $knows
  * @property Knowledge[] $knowledges
  * @property Own[] $owns
@@ -35,8 +37,10 @@ class Discipline extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'id_user'], 'required'],
             [['name'], 'string'],
+            [['id_user'], 'safe'],
+            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
 
@@ -48,6 +52,7 @@ class Discipline extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'id_user' => 'Id User',
         ];
     }
 
@@ -65,6 +70,14 @@ class Discipline extends \yii\db\ActiveRecord
     public function getCans()
     {
         return $this->hasMany(Can::className(), ['id_discipline' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
 
     /**

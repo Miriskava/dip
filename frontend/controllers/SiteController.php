@@ -171,9 +171,9 @@ class SiteController extends Controller
     {
         if (Yii::$app->user->can('head'))
             $this->layout = 'main';
-        $query = Discipline::find()->where(['user'=>Yii::$app->user->identity->id]);
+        $query = Discipline::find()->where(['id_user'=>Yii::$app->user->identity->id]);
         $dataProvider = new ActiveDataProvider(['query'=>$query]);
-        return $this->render('discipline', [
+        return $this->render('discipline/discipline', [
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -191,7 +191,7 @@ class SiteController extends Controller
         $know=Know::find()->where(['id_discipline' => $id])->all();
         $can=Can::find()->where(['id_discipline' => $id])->all();
 
-        return $this->render('disciplineone', [
+        return $this->render('discipline/disciplineone', [
             'one' => $one,
             'actions' => $actions,
             'skills' => $skills,
@@ -316,5 +316,14 @@ class SiteController extends Controller
             'model' => $model,
         ]);
         }
+    }
+    public function actionDisciplineupdate($id)
+    {
+        if (Yii::$app->user->can('head'))
+            $this->layout = 'main';
+
+        return $this->render('discipline/disciplineupdate',[
+
+        ]);
     }
 }

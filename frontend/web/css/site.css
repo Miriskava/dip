@@ -156,3 +156,8 @@ a.desc:after {
 .form .form-group {
     margin-bottom: -4px;
 }
+
+.navbar-toggle {
+    background-color: #10e2a6;
+    border: 1px solid #108472;
+}
