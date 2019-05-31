@@ -2,6 +2,7 @@
 use yii\bootstrap\Tabs;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Трудовые функции';
 ?>
@@ -31,7 +32,14 @@ for($i=0;$i<3;$i++) {
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'name',
-                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'template'=>'{update}',
+                        'urlCreator' => function ($action, $model, $key, $index) {
+                            return Url::to(['head/sortupdate','id'=>$model->id]);
+                        },
+                        'contentOptions' => ['style' => 'width: 30px; max-width: 30px;'],
+                    ]
                 ],
             ]),
         'headerOptions'=>['class'=>'he']

@@ -2,13 +2,13 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\Profession */
+/* @var $model \common\models\Discipline */
 
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Добавление профессинального стандарта';
+$this->title = 'Добавление дисциплины';
 ?>
 <div >
     <h1><?= Html::encode($this->title) ?></h1>
@@ -17,13 +17,13 @@ $this->title = 'Добавление профессинального станд
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(); ?>
-            <?= $form->field($model, 'code')->textInput(['autofocus' => true]) ?>
-            <?= $form->field($model, 'name')->textInput() ?>
-            <?= $form->field($model, 'date')->textInput() ?>
 
-            <?= $form->field($model, 'aim')->textarea() ?>
+            <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
+
+            <?=$form->field($model,'id_user')->dropDownList($model->userlist,['prompt'=>$teach])?>
             <br><h5 style="margin-left:10px">Учебный план</h5>
             <?= '<div style="overflow-y:scroll;height:250px"'.GridView::widget([
+                'id'=>'rezult',
                 'summary' => false,
                 'dataProvider' => $dataProvider,
                 'showHeader'=> false,

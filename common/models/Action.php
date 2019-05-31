@@ -9,10 +9,10 @@ use Yii;
  *
  * @property int $id Номер
  * @property int $id_workfun Номер трудоввой функции
- * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
  *
- * @property Discipline $discipline
+ * @property AcDis[] $acDis
+ * @property Discipline[] $disciplines
  * @property Workfunction $workfun
  * @property Own[] $owns
  */
@@ -32,11 +32,9 @@ class Action extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'id_workfun', 'name'], 'required'],
-            [['id', 'id_workfun', 'id_discipline'], 'integer'],
+            [['id_workfun', 'name'], 'required'],
+            [['id_workfun'], 'integer'],
             [['name'], 'string'],
-            [['id'], 'unique'],
-            [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
             [['id_workfun'], 'exist', 'skipOnError' => true, 'targetClass' => Workfunction::className(), 'targetAttribute' => ['id_workfun' => 'id']],
         ];
     }
@@ -48,18 +46,25 @@ class Action extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_workfun' => 'Трудовая функция',
-            'id_discipline' => 'Дисциплина',
-            'name' => 'Наименование',
+            'id_workfun' => 'Id Workfun',
+            'name' => 'Name',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDiscipline()
+    public function getAcDis()
     {
-        return $this->hasOne(Discipline::className(), ['id' => 'id_discipline']);
+        return $this->hasMany(AcDis::className(), ['id_action' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDisciplines()
+    {
+        return $this->hasMany(Discipline::className(), ['id' => 'id_discipline'])->viaTable('ac_dis', ['id_action' => 'id']);
     }
 
     /**
@@ -75,6 +80,6 @@ class Action extends \yii\db\ActiveRecord
      */
     public function getOwns()
     {
-        return $this->hasMany(Own::className(), ['id_action' => 'id']);
+        return $this->hasMany(Own::className(), ['id_sort' => 'id']);
     }
 }

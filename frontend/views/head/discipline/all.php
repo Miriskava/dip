@@ -10,7 +10,10 @@ $this->title = 'Список дисциплин';
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
+        [
+            'class' => 'yii\grid\SerialColumn',
+            'contentOptions' => ['style' => 'width: 30px; max-width: 30px;'],
+        ],
 
         [
             'attribute' => 'name',
@@ -18,6 +21,8 @@ $this->title = 'Список дисциплин';
             'value' => function ($data) { return Html::a($data->name, ['disciplineone','id'=>$data->id]);}
         ],
         [
+
+            'contentOptions' => ['style' => 'width: 150px; max-width: 150px;'],
             'attribute' => 'user',
             'format' => 'raw',
             'value' => function ($data) {
@@ -25,18 +30,12 @@ $this->title = 'Список дисциплин';
         ],
         [
             'class' => 'yii\grid\ActionColumn',
-            'buttons'  => [
-                'leadView'   => function ($url, $model) {
-                    $url = Url::to(['controller/lead-view', 'id' => $model->id]);
-                    return Html::a('<span class="fa fa-eye"></span>', $url, ['title' => 'view']);
-                },
-                'urlCreator' => function ($action, $model, $key, $index) {
-                    if ($action === 'view') {
-                        $url = 'index.php?r=client-login/lead-view&id=' . $model->id;
-                        return $url;
-                    }
-                }
-                ]
+            'template'=>'{update}&nbsp;&nbsp;&nbsp;{delete}',
+            'urlCreator' => function ($action, $model, $key, $index) {
+                if($action=='delete')return Url::to(['head/disciplinedelete','id'=>$model->id]);
+                else return Url::to(['head/disciplineupdate','id'=>$model->id]);
+            },
+            'contentOptions' => ['style' => 'width: 60px; max-width: 60px;'],
         ],
     ],
 ]); ?>

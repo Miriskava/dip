@@ -9,11 +9,11 @@ use Yii;
  *
  * @property int $id Номер
  * @property int $id_workfunction Номер трудоввой функции
- * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
  *
+ * @property KnDis[] $knDis
+ * @property Discipline[] $disciplines
  * @property Know[] $knows
- * @property Discipline $discipline
  * @property Workfunction $workfunction
  */
 class Knowledge extends \yii\db\ActiveRecord
@@ -33,9 +33,8 @@ class Knowledge extends \yii\db\ActiveRecord
     {
         return [
             [['id_workfunction', 'name'], 'required'],
-            [['id_workfunction', 'id_discipline'], 'integer'],
+            [['id_workfunction'], 'integer'],
             [['name'], 'string'],
-            [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
             [['id_workfunction'], 'exist', 'skipOnError' => true, 'targetClass' => Workfunction::className(), 'targetAttribute' => ['id_workfunction' => 'id']],
         ];
     }
@@ -47,10 +46,25 @@ class Knowledge extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_workfun' => 'Трудовая функция',
-            'id_discipline' => 'Дисциплина',
-            'name' => 'Наименование',
+            'id_workfunction' => 'Id Workfunction',
+            'name' => 'Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKnDis()
+    {
+        return $this->hasMany(KnDis::className(), ['id_knowledge' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDisciplines()
+    {
+        return $this->hasMany(Discipline::className(), ['id' => 'id_discipline'])->viaTable('kn_dis', ['id_knowledge' => 'id']);
     }
 
     /**
@@ -58,15 +72,7 @@ class Knowledge extends \yii\db\ActiveRecord
      */
     public function getKnows()
     {
-        return $this->hasMany(Know::className(), ['id_knowledge' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDiscipline()
-    {
-        return $this->hasOne(Discipline::className(), ['id' => 'id_discipline']);
+        return $this->hasMany(Know::className(), ['id_sort' => 'id']);
     }
 
     /**

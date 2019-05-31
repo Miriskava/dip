@@ -31,12 +31,6 @@ $this->title = 'Добавление профессинального станд
 
                     [
                         'class' => 'yii\grid\CheckboxColumn',
-                        'checkboxOptions' => function ($model, $key, $index, $column)use($plan) {
-                            if (in_array($model->id,$plan))
-                                return ['checked' => true];
-                            else
-                                return ['checked' => false];
-                        }
                     ],
 
                     'name',

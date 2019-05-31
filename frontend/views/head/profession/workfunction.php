@@ -1,6 +1,7 @@
 <?php
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Трудовые функции';
 ?>
@@ -20,6 +21,13 @@ $this->title = 'Трудовые функции';
                 return Html::a($data->name,['sorts','id'=>$data->id,'prof'=>$prof->id],[]);}
         ],
         'level',
-        ['class' => 'yii\grid\ActionColumn'],
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'template'=>'{update}',
+            'urlCreator' => function ($action, $model, $key, $index) {
+                return Url::to(['head/workfunctionupdate','id'=>$model->id]);
+            },
+            'contentOptions' => ['style' => 'width: 30px; max-width: 30px;'],
+        ]
     ],
 ]); ?>

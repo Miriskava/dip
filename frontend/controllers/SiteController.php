@@ -1,11 +1,13 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\AcDis;
 use common\models\Action;
 use common\models\ActionSearch;
 use common\models\Can;
 use common\models\Discipline;
 use common\models\DisciplineSearch;
+use common\models\KnDis;
 use common\models\PLanSearch;
 use common\models\Know;
 use common\models\Knowledge;
@@ -13,6 +15,7 @@ use common\models\Own;
 use common\models\Plan;
 use common\models\ProfPlan;
 use common\models\PlanDisc;
+use common\models\SkDis;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidParamException;
@@ -183,9 +186,14 @@ class SiteController extends Controller
         if (Yii::$app->user->can('head'))
             $this->layout = 'main';
         $one = Discipline::findOne($id);
-        $actions = Action::find()->where(['id_discipline' => $id])->all();
-        $knowledges = Knowledge::find()->where(['id_discipline' => $id])->all();
-        $skills = Skill::find()->where(['id_discipline' => $id])->all();
+
+        $acdis=AcDis::find()->where(['id_discipline'=>$id])->all();
+        $kndis=KnDis::find()->where(['id_discipline'=>$id])->all();
+        $skdis=SkDis::find()->where(['id_discipline'=>$id])->all();
+
+        $actions = Action::find()->all();
+        $knowledges = Knowledge::find()->all();
+        $skills = Skill::find()->all();
 
         $own=Own::find()->where(['id_discipline' => $id])->all();
         $know=Know::find()->where(['id_discipline' => $id])->all();
@@ -199,6 +207,9 @@ class SiteController extends Controller
             'own'=>$own,
             'know'=>$know,
             'can'=>$can,
+            'acdis'=>$acdis,
+            'kndis'=>$kndis,
+            'skdis'=>$skdis
         ]);
     }
 
@@ -316,14 +327,5 @@ class SiteController extends Controller
             'model' => $model,
         ]);
         }
-    }
-    public function actionDisciplineupdate($id)
-    {
-        if (Yii::$app->user->can('head'))
-            $this->layout = 'main';
-
-        return $this->render('discipline/disciplineupdate',[
-
-        ]);
     }
 }

@@ -9,11 +9,11 @@ use Yii;
  *
  * @property int $id Номер
  * @property int $id_workfunction Номер трудоввой функции
- * @property int $id_discipline Номер дисциплины
  * @property string $name Наименование
  *
  * @property Can[] $cans
- * @property Discipline $discipline
+ * @property SkDis[] $skDis
+ * @property Discipline[] $disciplines
  * @property Workfunction $workfunction
  */
 class Skill extends \yii\db\ActiveRecord
@@ -33,9 +33,8 @@ class Skill extends \yii\db\ActiveRecord
     {
         return [
             [['id_workfunction', 'name'], 'required'],
-            [['id_workfunction', 'id_discipline'], 'integer'],
+            [['id_workfunction'], 'integer'],
             [['name'], 'string'],
-            [['id_discipline'], 'exist', 'skipOnError' => true, 'targetClass' => Discipline::className(), 'targetAttribute' => ['id_discipline' => 'id']],
             [['id_workfunction'], 'exist', 'skipOnError' => true, 'targetClass' => Workfunction::className(), 'targetAttribute' => ['id_workfunction' => 'id']],
         ];
     }
@@ -47,9 +46,8 @@ class Skill extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_workfun' => 'Трудовая функция',
-            'id_discipline' => 'Дисциплина',
-            'name' => 'Наименование',
+            'id_workfunction' => 'Id Workfunction',
+            'name' => 'Name',
         ];
     }
 
@@ -58,15 +56,23 @@ class Skill extends \yii\db\ActiveRecord
      */
     public function getCans()
     {
-        return $this->hasMany(Can::className(), ['id_skill' => 'id']);
+        return $this->hasMany(Can::className(), ['id_sort' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDiscipline()
+    public function getSkDis()
     {
-        return $this->hasOne(Discipline::className(), ['id' => 'id_discipline']);
+        return $this->hasMany(SkDis::className(), ['id_skill' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDisciplines()
+    {
+        return $this->hasMany(Discipline::className(), ['id' => 'id_discipline'])->viaTable('sk_dis', ['id_skill' => 'id']);
     }
 
     /**

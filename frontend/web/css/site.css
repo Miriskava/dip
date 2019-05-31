@@ -4,20 +4,20 @@ body {
 }
 
 .navbar{
-    background-color: #53D3A6;
+    background: linear-gradient(to right, #006bff -25% , #5cb85c 65%, #cef026);
 }
 
 .navbar a{
     color: white;
-    font-size: 20px;
+    font-size: 17px;
     text-shadow: #424242 0 0 3px,#424242 0 0 3px,#424242 0 0 3px,#424242 0 0 3px;
 }
 
 .navbar button{
     color: white;
-    font-size: 20px;
+    font-size: 17px;
     text-shadow: #424242 0 0 3px,#424242 0 0 3px,#424242 0 0 3px,#424242 0 0 3px;
-    margin-top: -5px;
+    margin-top: -2.5px;
 }
 
 label{
@@ -33,7 +33,7 @@ label{
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 0px 15px 20px;
 }
 
 .footer {

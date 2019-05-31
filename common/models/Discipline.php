@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "discipline".
@@ -78,6 +79,11 @@ class Discipline extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+
+    public function getUserList()
+    {
+        return ArrayHelper::map(User::find()->andWhere(['!=','id',1])->all(),'id','surname');
     }
 
     /**
