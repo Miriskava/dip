@@ -90,7 +90,7 @@ class HeadController extends Controller
     {
         $searchModel = new PlanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('plan',[
+        return $this->render('plan/plan',[
             'searchModel'=>$searchModel,
             'dataProvider'=>$dataProvider,
         ]);
@@ -102,7 +102,19 @@ class HeadController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['plan']);
         } else {
-            return $this->render('createplan', [
+            return $this->render('plan/createplan', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionUpdateplan($id)
+    {
+        $model=Plan::findOne($id);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['plan']);
+        } else {
+            return $this->render('plan/updateplan', [
                 'model' => $model,
             ]);
         }

@@ -7,10 +7,11 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Добавление учебного плана';
+$this->title = 'Редактирование учебного плана';
 ?>
 <div >
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2><?=$prof->name?></h2>
+    <h3><?=$this->title?></h3>
 
 
     <div class="row">
@@ -19,7 +20,7 @@ $this->title = 'Добавление учебного плана';
             <?= $form->field($model, 'code')->textInput(['autofocus' => true]) ?>
             <?= $form->field($model, 'name')->textInput() ?>
             <?= $form->field($model, 'date')->textInput() ?>
-            <?= $form->field($model, 'id_profession')->dropDownList($model->proflist) ?>
+
 
             <div class="form-group">
                 <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>

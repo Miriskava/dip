@@ -1,6 +1,7 @@
 <?php
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Учебные планы';
 ?>
@@ -16,6 +17,13 @@ $this->title = 'Учебные планы';
         'name',
         'date',
 
-        ['class' => 'yii\grid\ActionColumn'],
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'template'=>'{update}',
+            'urlCreator' => function ($action, $model, $key, $index) {
+                return Url::to(['head/updateplan','id'=>$model->id]);
+            },
+            'contentOptions' => ['style' => 'width: 30px; max-width: 30px;'],
+        ]
     ],
 ]); ?>
