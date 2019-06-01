@@ -4,7 +4,7 @@ body {
 }
 
 .navbar{
-    background: linear-gradient(to right, #006bff -25% , #5cb85c 65%, #cef026);
+    background: linear-gradient(to top right, #006bff 5%, #5cb85c 50% , #cef026);
 }
 
 .navbar a{

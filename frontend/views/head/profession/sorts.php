@@ -26,7 +26,7 @@ for($i=0;$i<3;$i++) {
     }
     $t[$i] = [
         'label' => $head,
-        'content' => '<h3>'.$head.'</h3>'.Html::a('Добавить',['createprofession'],['class'=>'btn btn-success']).
+        'content' => '<h3>'.$head.'</h3>'.Html::a('Добавить',['sortscreate','prof'=>$prof->id,'wf'=>$wf,'s'=>$i],['class'=>'btn btn-success']).
             GridView::widget([
                 'dataProvider' => $s,
                 'columns' => [
@@ -35,8 +35,8 @@ for($i=0;$i<3;$i++) {
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'template'=>'{update}',
-                        'urlCreator' => function ($action, $model, $key, $index) {
-                            return Url::to(['head/sortupdate','id'=>$model->id]);
+                        'urlCreator' => function ($action, $model, $key, $index)use($i,$prof) {
+                            return Url::to(['head/sortsupdate','id'=>$model->id,'prof'=>$prof->id,'s'=>$i]);
                         },
                         'contentOptions' => ['style' => 'width: 30px; max-width: 30px;'],
                     ]

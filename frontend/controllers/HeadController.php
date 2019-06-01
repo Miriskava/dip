@@ -192,7 +192,21 @@ class HeadController extends Controller
                 'model' => $model,
             ]);
         }
-    }//?
+    }
+
+    public function actionGeneralupdate($id,$prof)
+    {
+        $model=General::findOne($id);
+        $proff=Profession::findOne($prof);
+        if ($model->load(Yii::$app->request->post())&& $model->save() ) {
+            return $this->redirect(['general']);
+        } else {
+            return $this->render('profession/generalupdate', [
+                'model' => $model,
+                'prof'=>$proff
+            ]);
+        }
+    }
 
     public function actionWorkfunction($id,$prof)
     {
@@ -204,14 +218,45 @@ class HeadController extends Controller
         return $this->render('profession/workfunction',[
             'dataProvider'=>$dataProvider,
             'prof'=>$p,
+            'g'=>$id
         ]);
+    }
+
+    public function actionWorkfunctioncreate($g,$prof)
+    {
+        $p=Profession::findOne($prof);
+        $model=new Workfunction();
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->id_general=$g;
+            $model->save();
+            return $this->redirect(['workfunction']);
+        } else {
+            return $this->render('profession/workfunctioncreate', [
+                'model' => $model,
+                'prof'=>$p
+            ]);
+        }
+    }
+
+    public function actionWorkfunctionupdate($id,$prof)
+    {
+        $model=Workfunction::findOne($id);
+        $proff=Profession::findOne($prof);
+        if ($model->load(Yii::$app->request->post())&& $model->save() ) {
+            return $this->redirect(['workfunction']);
+        } else {
+            return $this->render('profession/workfunctionupdate', [
+                'model' => $model,
+                'prof'=>$proff
+            ]);
+        }
     }
 
     public function actionSorts($id,$prof)
     {
         $p=Profession::findOne($prof);
 
-        $query1=Action::find()->where(['id_workfun'=>$id]);
+        $query1=Action::find()->where(['id_workfunction'=>$id]);
         $action=new ActiveDataProvider([
             'query' => $query1,
         ]);
@@ -230,7 +275,52 @@ class HeadController extends Controller
             'skill'=>$skill,
             'knowledge'=>$knowledge,
             'prof'=>$p,
+            'wf'=>$id
         ]);
+    }
+
+    public function actionSortscreate($prof,$wf,$s)
+    {
+        $p=Profession::findOne($prof);
+        if($s==0)
+            $model=new Action();
+        if($s==1)
+            $model=new Skill();
+        else
+            $model=new Knowledge();
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->id_workfunction=$wf;
+            $model->save();
+            return $this->redirect(['sorts']);
+        } else {
+            return $this->render('profession/sortscreate', [
+                'model' => $model,
+                'prof'=>$p,
+                's'=>$s
+            ]);
+        }
+    }
+
+    public function actionSortsupdate($id,$prof,$s)
+    {
+        $proff=Profession::findOne($prof);
+
+        if($s==0)
+            $model=Action::findOne($id);
+        if($s==1)
+            $model=Skill::findOne($id);
+        else
+            $model=Knowledge::findOne($id);
+
+        if ($model->load(Yii::$app->request->post())&& $model->save() ) {
+            return $this->redirect(['sorts']);
+        } else {
+            return $this->render('profession/sortsupdate', [
+                'model' => $model,
+                'prof'=>$proff,
+                's'=>$s
+            ]);
+        }
     }
 
     public function actionAll(){

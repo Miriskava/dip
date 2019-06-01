@@ -8,7 +8,7 @@ $this->title = 'Трудовые функции';
 
     <h2><?=$prof->name?></h2>
     <h3><?=$this->title?></h3>
-<?=Html::a('Добавить',['createprofession'],['class'=>'btn btn-success'])?>
+<?=Html::a('Добавить',['workfunctioncreate','g'=>$g,'prof'=>$prof->id],['class'=>'btn btn-success'])?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
@@ -24,8 +24,8 @@ $this->title = 'Трудовые функции';
         [
             'class' => 'yii\grid\ActionColumn',
             'template'=>'{update}',
-            'urlCreator' => function ($action, $model, $key, $index) {
-                return Url::to(['head/workfunctionupdate','id'=>$model->id]);
+            'urlCreator' => function ($action, $model, $key, $index)use($prof) {
+                return Url::to(['head/workfunctionupdate','id'=>$model->id,'prof'=>$prof->id]);
             },
             'contentOptions' => ['style' => 'width: 30px; max-width: 30px;'],
         ]
