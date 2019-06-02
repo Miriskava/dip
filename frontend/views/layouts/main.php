@@ -42,6 +42,7 @@ AppAsset::register($this);
     } else {
 
         $menuItems = [
+            ['label' => 'Критерии', 'url' => ['/head/criterion']],
             ['label' => 'Все дисциплины', 'url' => ['/head/all']],
             ['label' => 'Дисциплины', 'url' => ['/site/discipline']],
             ['label' => 'Профессиональные стандарты', 'url' => ['/head/profession']],

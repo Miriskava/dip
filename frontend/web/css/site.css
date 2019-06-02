@@ -4,7 +4,22 @@ body {
 }
 
 .navbar{
-    background: linear-gradient(to top right, #006bff 5%, #5cb85c 50% , #cef026);
+    background: linear-gradient(to top right, #4c97ff -5%, #8ccd8c 60% , #dcf467);
+}
+
+.onehead .panel-heading{
+    background: #cce1ff;
+}
+.twohead .panel-heading{
+    background: #def0de !important;
+}
+
+.threehead .panel-heading{
+   background: #f5fcd3 !important;
+}
+
+.fourhead .panel-heading{
+    background: #fffff9 !important;
 }
 
 .navbar a{
@@ -160,4 +175,14 @@ a.desc:after {
 .navbar-toggle {
     background-color: #10e2a6;
     border: 1px solid #108472;
+}
+
+.name{
+    position: relative;
+}
+
+.cr{
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }

@@ -449,4 +449,24 @@ class HeadController extends Controller
             'skdis'=>$skdis
         ]);
     }
+
+    public function actionCriterion()
+    {
+        $prof=Profession::find()->all();
+        $general=General::find();
+        $workfun=Workfunction::find();
+
+        $action=Action::find();
+        $knowledge=Knowledge::find();
+        $skill=Skill::find();
+
+        return $this->render('criterion',[
+            'prof'=>$prof,
+            'general'=>$general,
+            'workfun'=>$workfun,
+            'action'=>$action,
+            'knowledge'=>$knowledge,
+            'skill'=>$skill
+        ]);
+    }
 }
