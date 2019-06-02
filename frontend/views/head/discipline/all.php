@@ -30,12 +30,17 @@ $this->title = 'Список дисциплин';
         ],
         [
             'class' => 'yii\grid\ActionColumn',
-            'template'=>'{update}&nbsp;&nbsp;&nbsp;{delete}',
+            'template'=>'{update}&nbsp;&nbsp;{delete}&nbsp;&nbsp;&nbsp;{view}',
+            'buttons'=>[
+                'view'=>function($model, $key, $index) {
+                        $model='head/disciplinelist';
+                        return Html::a('<span class="glyphicon glyphicon-list-alt">',Url::to([$model,'id'=>$index]),['title'=>'Критерии']);}
+            ],
             'urlCreator' => function ($action, $model, $key, $index) {
                 if($action=='delete')return Url::to(['head/disciplinedelete','id'=>$model->id]);
-                else return Url::to(['head/disciplineupdate','id'=>$model->id]);
+                else if($action=='update') return Url::to(['head/disciplineupdate','id'=>$model->id]);
             },
-            'contentOptions' => ['style' => 'width: 60px; max-width: 60px;'],
+            'contentOptions' => ['style' => 'width: 90px; max-width: 90px;'],
         ],
     ],
 ]); ?>

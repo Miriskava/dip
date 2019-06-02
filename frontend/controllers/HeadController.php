@@ -469,4 +469,27 @@ class HeadController extends Controller
             'skill'=>$skill
         ]);
     }
+
+    public function actionDisciplinelist($id)
+    {
+        $discipline=Discipline::findOne($id);
+
+        $prof=Profession::find()->all();
+        $general=General::find();
+        $workfun=Workfunction::find();
+
+        $action=Action::find();
+        $knowledge=Knowledge::find();
+        $skill=Skill::find();
+
+        return $this->render('discipline/disciplinelist',[
+            'discipline'=>$discipline,
+            'prof'=>$prof,
+            'general'=>$general,
+            'workfun'=>$workfun,
+            'action'=>$action,
+            'knowledge'=>$knowledge,
+            'skill'=>$skill
+        ]);
+    }
 }
